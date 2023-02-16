@@ -10,6 +10,31 @@
 		"@nrwl/workspace": "15.7.1",
 		"nx": "15.7.1",
 		"prettier": "^2.6.2",
-		"typescript": "~4.8.2"
+		"typescript": "~4.8.2",
+		"sass": "^1.32.0",
+		"@nativescript/webpack": "~5.0.0",
+		"@nativescript/types": "~8.4.0",
+		"@angular-devkit/build-angular": "^15.0.0",
+		"@angular/compiler-cli": "^15.0.0",
+		"@ngtools/webpack": "^15.0.0"
+	},
+	"dependencies": {
+		"@nativescript/core": "~8.4.0",
+		"nativescript-theme-core": "~1.0.4",
+		"@nativescript/angular": "^15.0.0",
+		"@angular/animations": "^15.0.0",
+		"@angular/common": "^15.0.0",
+		"@angular/compiler": "^15.0.0",
+		"@angular/core": "^15.0.0",
+		"@angular/forms": "^15.0.0",
+		"@angular/platform-browser": "^15.0.0",
+		"@angular/platform-browser-dynamic": "^15.0.0",
+		"@angular/router": "^15.0.0",
+		"rxjs": "~7.6.0",
+		"zone.js": "^0.12.0"
+	},
+	"nativescript-nx": {
+		"prefix": "",
+		"framework": "angular"
 	}
 }
