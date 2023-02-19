@@ -66,6 +66,20 @@
 					"apps/nativescript-amelie-ao3/src/**/*.html"
 				]
 			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "apps/nativescript-amelie-ao3/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
 		}
 	}
 }

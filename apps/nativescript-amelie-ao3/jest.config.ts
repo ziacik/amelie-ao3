@@ -1,19 +1,19 @@
-module.exports = {
+/* eslint-disable */
+export default {
+	displayName: 'nativescript-amelie-ao3',
 	preset: '../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {
 		'ts-jest': {
-			stringifyContentPathRegex: '\\.(html|svg)$',
-			astTransformers: [
-				'jest-preset-angular/build/InlineFilesTransformer',
-				'jest-preset-angular/build/StripStylesTransformer',
-			],
 			tsconfig: '<rootDir>/tsconfig.spec.json',
+			stringifyContentPathRegex: '\\.(html|svg)$',
 		},
 	},
-	coverageDirectory: '../../coverage/apps/nativescript-amelie-ao3',
-
-	displayName: 'nativescript-safety',
+	coverageDirectory: '../../coverage/apps/rrr',
+	transform: {
+		'^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
+	},
+	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',
