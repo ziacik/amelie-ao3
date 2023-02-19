@@ -4,6 +4,7 @@ import {
 	NativeScriptFormsModule,
 	NativeScriptRouterModule,
 } from '@nativescript/angular';
+import { CardComponent } from './card/card.component';
 
 const MODULES = [
 	NativeScriptCommonModule,
@@ -11,9 +12,14 @@ const MODULES = [
 	NativeScriptRouterModule,
 ];
 
+const COMPONENTS = [
+	CardComponent
+]
+
 @NgModule({
 	imports: [...MODULES],
-	exports: [...MODULES],
+	exports: [...MODULES, ...COMPONENTS],
 	schemas: [NO_ERRORS_SCHEMA],
+	declarations: [...COMPONENTS],
 })
-export class SharedModule {}
+export class SharedModule { }
