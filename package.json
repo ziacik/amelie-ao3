@@ -6,6 +6,7 @@
 	"private": true,
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^15.0.0",
+		"@angular/cli": "^15.1.6",
 		"@angular/compiler-cli": "^15.0.0",
 		"@nativescript/nx": "^4.2.0",
 		"@nativescript/types": "~8.4.0",
