@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'card',
 	templateUrl: './card.component.html',
 	styleUrls: ['./card.component.scss'],
 })
-export class CardComponent {}
+export class CardComponent {
+	@Input()
+	title = 'Title';
+
+	@Input()
+	author = 'Author';
+}

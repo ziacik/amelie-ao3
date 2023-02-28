@@ -1,1 +1,26 @@
-<Label>card works!</Label>
+<GridLayout rows="auto, *, auto" columns="*" class="card">
+	<StackLayout row="0" class="card-header">
+		<Label [text]="title" class="card-title"></Label>
+		<Label [text]="author" class="card-author"></Label>
+		<Label text="Zoznam tagov" class="card-tags"></Label>
+	</StackLayout>
+	<StackLayout row="1" class="card-body">
+		<ScrollView>
+			<Label text="Kolapsovateľný popis" class="card-description"></Label>
+		</ScrollView>
+	</StackLayout>
+	<StackLayout row="2" class="card-footer">
+		<StackLayout orientation="horizontal" class="card-info">
+			<Label text="Počet kapitol" class="card-info-label"></Label>
+			<Image src="res://icon_chapters.png" class="card-info-icon"></Image>
+		</StackLayout>
+		<StackLayout orientation="horizontal" class="card-info">
+			<Label text="Počet slov" class="card-info-label"></Label>
+			<Image src="res://icon_words.png" class="card-info-icon"></Image>
+		</StackLayout>
+		<StackLayout orientation="horizontal" class="card-info">
+			<Label text="Počet kudos" class="card-info-label"></Label>
+			<Image src="res://icon_kudos.png" class="card-info-icon"></Image>
+		</StackLayout>
+	</StackLayout>
+</GridLayout>

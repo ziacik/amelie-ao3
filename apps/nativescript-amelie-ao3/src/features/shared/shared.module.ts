@@ -12,9 +12,7 @@ const MODULES = [
 	NativeScriptRouterModule,
 ];
 
-const COMPONENTS = [
-	CardComponent
-]
+const COMPONENTS = [CardComponent];
 
 @NgModule({
 	imports: [...MODULES],
@@ -22,4 +20,4 @@ const COMPONENTS = [
 	schemas: [NO_ERRORS_SCHEMA],
 	declarations: [...COMPONENTS],
 })
-export class SharedModule { }
+export class SharedModule {}
