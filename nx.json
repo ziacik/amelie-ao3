@@ -4,6 +4,7 @@
 	"affected": {
 		"defaultBase": "master"
 	},
+	"defaultProject": "nativescript-amelie-ao3",
 	"tasksRunnerOptions": {
 		"default": {
 			"runner": "@nrwl/nx-cloud",
