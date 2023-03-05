@@ -16,8 +16,8 @@ export class HomeComponent {
 
 	ngOnInit() {
 		setStatusBarColor('dark', '#97d9e9');
-		this.works = this.searchService.search(
-			'Wednesday Addams Is Soft For Enid Sinclair'
-		);
+		this.works = this.searchService.search({
+			tags: ['Wednesday Addams is Soft for Enid Sinclair'],
+		});
 	}
 }

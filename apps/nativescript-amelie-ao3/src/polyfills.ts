@@ -18,3 +18,6 @@ import 'zone.js';
 
 // Add NativeScript specific Zone JS patches
 import '@nativescript/zone-js';
+
+// Additional polyfills
+import 'core-js/features/url';

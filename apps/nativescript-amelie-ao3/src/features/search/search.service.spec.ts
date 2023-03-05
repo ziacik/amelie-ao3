@@ -1,10 +1,10 @@
-import { TestBed } from '@angular/core/testing';
 import {
 	HttpClientTestingModule,
 	HttpTestingController,
 } from '@angular/common/http/testing';
-import { SearchService } from './search.service';
+import { TestBed } from '@angular/core/testing';
 import { Work } from '../../core/work';
+import { SearchService } from './search.service';
 import * as searchHtml from './__fixtures__/search.html';
 
 describe('SearchService', () => {
@@ -20,11 +20,7 @@ describe('SearchService', () => {
 		httpMock = TestBed.inject(HttpTestingController);
 	});
 
-	afterEach(() => {
-		httpMock.verify();
-	});
-
-	it('makes a search request to ao3, scrapes the result to a list of Works', () => {
+	it('scrapes a search result to a list of Works', () => {
 		let actual: Work[] = [];
 		const expected: Work[] = [
 			new Work({
@@ -73,15 +69,49 @@ describe('SearchService', () => {
 			}),
 		];
 
-		const keyword = 'wenclair';
-		service.search(keyword).subscribe((works) => (actual = works));
-
-		const req = httpMock.expectOne(
-			`https://archiveofourown.org/works/search?utf8=✓&commit=Search&work_search[query]=${keyword}`
-		);
-		req.flush(searchHtml);
+		service.search({ text: 'wenclair' }).subscribe((works) => (actual = works));
+		httpMock.expectOne(() => true).flush(searchHtml);
 
 		expect(actual.length).toBe(2);
 		expect(actual).toEqual(expected);
+	});
+
+	it('can sort', () => {
+		service
+			.search({ text: `enid` }, { field: '_score', direction: 'asc' })
+			.subscribe();
+		const expectedUrl = `https://archiveofourown.org/works/search?work_search%5Bsort_column%5D=_score&work_search%5Bsort_direction%5D=asc&work_search%5Bquery%5D=enid&page=1`;
+		httpMock.expectOne(expectedUrl);
+		httpMock.verify();
+	});
+
+	it('can page', () => {
+		service
+			.search({ text: `enid` }, { field: '_score', direction: 'asc' }, 130)
+			.subscribe();
+		const expectedUrl = `https://archiveofourown.org/works/search?work_search%5Bsort_column%5D=_score&work_search%5Bsort_direction%5D=asc&work_search%5Bquery%5D=enid&page=130`;
+		httpMock.expectOne(expectedUrl);
+		httpMock.verify();
+	});
+
+	it('can search by free text, encodes the text', () => {
+		service.search({ text: `what /? ever &'"` }).subscribe();
+		const expectedUrl = `https://archiveofourown.org/works/search?work_search%5Bsort_column%5D=kudos_count&work_search%5Bsort_direction%5D=desc&work_search%5Bquery%5D=what+%2F%3F+ever+%26%27%22&page=1`;
+		httpMock.expectOne(expectedUrl);
+		httpMock.verify();
+	});
+
+	it('can search by additional tags, encodes the text', () => {
+		service
+			.search({
+				tags: [
+					'Wednesday Addams is Soft for Enid Sinclair',
+					'Lesbian Enid Sinclair',
+				],
+			})
+			.subscribe();
+		const expectedUrl = `https://archiveofourown.org/works/search?work_search%5Bsort_column%5D=kudos_count&work_search%5Bsort_direction%5D=desc&work_search%5Bfreeform_names%5D=Wednesday+Addams+is+Soft+for+Enid+Sinclair%2CLesbian+Enid+Sinclair&page=1`;
+		httpMock.expectOne(expectedUrl);
+		httpMock.verify();
 	});
 });

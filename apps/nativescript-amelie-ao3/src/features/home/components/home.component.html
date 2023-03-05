@@ -6,6 +6,7 @@
 			*ngFor="let work of works | async"
 			[title]="work.title"
 			[author]="work.author"
+			[url]="work.href"
 		></card>
 		<Image
 			src="~/assets/images/nx-nativescript.png"

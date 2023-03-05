@@ -4,18 +4,50 @@ import { map, Observable } from 'rxjs';
 import { Work } from '../../core/work';
 import * as cheerio from 'cheerio';
 
+export type SearchDefinition = {
+	text?: string;
+	tags?: string[];
+};
+
+export type SortDefinition = {
+	field: 'kudos_count' | '_score';
+	direction: 'asc' | 'desc';
+};
+
+export const DEFAULT_SORT: SortDefinition = {
+	field: 'kudos_count',
+	direction: 'desc',
+};
+
 @Injectable({
 	providedIn: 'root',
 })
 export class SearchService {
-	baseUrl =
-		'https://archiveofourown.org/works/search?utf8=✓&commit=Search&work_search[query]=';
+	baseUrl = 'https://archiveofourown.org';
 
 	constructor(private http: HttpClient) {}
 
-	search(keyword: string): Observable<Work[]> {
-		const url = this.baseUrl + keyword;
-		return this.http.get(url, { responseType: 'text' }).pipe(map(toWork));
+	search(
+		search: SearchDefinition,
+		sort: SortDefinition = DEFAULT_SORT,
+		page = 1
+	): Observable<Work[]> {
+		const url = new URL(`${this.baseUrl}/works/search`);
+		url.searchParams.set('work_search[sort_column]', sort.field);
+		url.searchParams.set('work_search[sort_direction]', sort.direction);
+		if (search.text) {
+			url.searchParams.set('work_search[query]', search.text);
+		}
+		if (search.tags && search.tags.length) {
+			url.searchParams.set(
+				'work_search[freeform_names]',
+				search.tags.join(',')
+			);
+		}
+		url.searchParams.set('page', page.toString());
+		return this.http
+			.get(url.toString(), { responseType: 'text' })
+			.pipe(map(toWork));
 	}
 }
 
