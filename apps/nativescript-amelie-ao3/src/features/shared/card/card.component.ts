@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'card',
@@ -11,4 +11,14 @@ export class CardComponent {
 
 	@Input()
 	author = 'Author';
+
+	@Input()
+	url = '';
+
+	@Output()
+	tap: EventEmitter<void> = new EventEmitter();
+
+	onTapped(): void {
+		this.tap.emit();
+	}
 }

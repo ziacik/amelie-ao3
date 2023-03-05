@@ -29,3 +29,15 @@ export class Work {
 		this.href = href;
 	}
 }
+
+export function testWork(data: Partial<Work>): Work {
+	const id = data.id ?? 123;
+	return {
+		id,
+		title: data.title ?? `Title ${id}`,
+		author: data.author ?? `Author ${id}`,
+		summary: data.summary ?? `Summary ${id}`,
+		tags: data.tags ?? [`Tag One`, `Tag Two`],
+		href: data.href ?? `href/${id}`,
+	};
+}

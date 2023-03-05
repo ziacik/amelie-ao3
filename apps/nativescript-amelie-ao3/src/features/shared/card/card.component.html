@@ -1,4 +1,4 @@
-<GridLayout rows="auto, *, auto" columns="*" class="card">
+<GridLayout rows="auto, *, auto" columns="*" class="card" (tap)="onTapped()">
 	<StackLayout row="0" class="card-header">
 		<Label [text]="title" class="card-title"></Label>
 		<Label [text]="author" class="card-author"></Label>

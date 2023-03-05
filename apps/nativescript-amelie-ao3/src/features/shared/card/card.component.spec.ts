@@ -1,14 +1,23 @@
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	NO_ERRORS_SCHEMA,
+	Output,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CardComponent } from './card.component';
+
+jest.mock('@nativescript/core', () => ({}));
 
 @Component({
 	selector: 'Label',
 })
 class MockLabel {
 	@Input() text = '???';
+	@Output() tap = new EventEmitter<void>();
 }
 
 describe('CardComponent', () => {
@@ -26,7 +35,7 @@ describe('CardComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('will render a work title', () => {
+	it('shows a work title', () => {
 		component.title = 'Some Work';
 		fixture.detectChanges();
 		const e: MockLabel = fixture.debugElement.query(
@@ -35,12 +44,22 @@ describe('CardComponent', () => {
 		expect(e.text).toEqual('Some Work');
 	});
 
-	it('will render a work author', () => {
+	it('shows a work author', () => {
 		component.author = 'Some Author';
 		fixture.detectChanges();
 		const e: MockLabel = fixture.debugElement.query(
 			By.css('.card-author')
 		).componentInstance;
 		expect(e.text).toEqual('Some Author');
+	});
+
+	it('emits a tap event when tapped', () => {
+		let tapped = false;
+		component.tap.subscribe(() => (tapped = true));
+		fixture.debugElement
+			.query(By.css('GridLayout'))
+			.triggerEventHandler('tap', null);
+		fixture.detectChanges();
+		expect(tapped).toBe(true);
 	});
 });
