@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Utils } from '@nativescript/core';
-import { Observable } from 'rxjs';
+import { ScrollEventData, ScrollView, Utils } from '@nativescript/core';
+import { BehaviorSubject, Observable, scan, switchMap } from 'rxjs';
 import { Work } from '../../../core/work';
 import { setStatusBarColor } from '../../../utils';
-import { SearchService } from '../../search/search.service';
+import { DEFAULT_SORT, SearchService } from '../../search/search.service';
 
 @Component({
 	moduleId: module.id,
@@ -12,18 +12,44 @@ import { SearchService } from '../../search/search.service';
 })
 export class HomeComponent {
 	works?: Observable<Work[]>;
+	page: BehaviorSubject<number> = new BehaviorSubject(1);
 
 	constructor(private readonly searchService: SearchService) {}
 
 	ngOnInit() {
 		setStatusBarColor('dark', '#97d9e9');
-		this.works = this.searchService.search({
-			tags: ['Wednesday Addams is Soft for Enid Sinclair'],
-		});
+		const works$ = this.page.pipe(
+			switchMap((pageNo) =>
+				this.searchService.search(
+					{
+						tags: ['Wednesday Addams is Soft for Enid Sinclair'],
+					},
+					DEFAULT_SORT,
+					pageNo
+				)
+			)
+		);
+
+		this.works = works$.pipe(
+			scan<Work[], Work[]>(
+				(allWorks, newWorks) => allWorks.concat(newWorks),
+				[]
+			)
+		);
 	}
 
 	onCardTapped(work: Work): void {
 		console.log('Open url', work.href);
 		Utils.openUrl(work.href);
+	}
+
+	onScroll(args: ScrollEventData) {
+		const scrollView = args.object as ScrollView;
+		const scrollY = scrollView.verticalOffset;
+		const scrollHeight = scrollView.scrollableHeight;
+
+		if (scrollY === scrollHeight) {
+			this.page.next(this.page.value + 1);
+		}
 	}
 }
