@@ -3,15 +3,16 @@ export default {
 	displayName: 'nativescript-amelie-ao3',
 	preset: '../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	globals: {
-		'ts-jest': {
-			tsconfig: '<rootDir>/tsconfig.spec.json',
-			stringifyContentPathRegex: '\\.(html|svg)$',
-		},
-	},
-	coverageDirectory: '../../coverage/apps/rrr',
+	globals: {},
+	coverageDirectory: '../../coverage/apps/amelie-ao3',
 	transform: {
-		'^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
+		'^.+\\.(ts|mjs|js|html)$': [
+			'jest-preset-angular',
+			{
+				tsconfig: '<rootDir>/tsconfig.spec.json',
+				stringifyContentPathRegex: '\\.(html|svg)$',
+			},
+		],
 	},
 	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 	snapshotSerializers: [
