@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ScrollEventData, ScrollView, Utils } from '@nativescript/core';
-import { BehaviorSubject, Observable, scan, switchMap } from 'rxjs';
+import { BehaviorSubject, concatMap, Observable, scan } from 'rxjs';
 import { Work } from '../../../core/work';
 import { setStatusBarColor } from '../../../utils';
 import { DEFAULT_SORT, SearchService } from '../../search/search.service';
@@ -18,8 +18,9 @@ export class HomeComponent {
 
 	ngOnInit() {
 		setStatusBarColor('dark', '#97d9e9');
-		const works$ = this.page.pipe(
-			switchMap((pageNo) =>
+
+		this.works = this.page.pipe(
+			concatMap((pageNo) =>
 				this.searchService.search(
 					{
 						tags: ['Wednesday Addams is Soft for Enid Sinclair'],
@@ -27,14 +28,8 @@ export class HomeComponent {
 					DEFAULT_SORT,
 					pageNo
 				)
-			)
-		);
-
-		this.works = works$.pipe(
-			scan<Work[], Work[]>(
-				(allWorks, newWorks) => allWorks.concat(newWorks),
-				[]
-			)
+			),
+			scan((allWorks, newWorks) => allWorks.concat(newWorks), [] as Work[])
 		);
 	}
 
