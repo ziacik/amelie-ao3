@@ -1,10 +1,4 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	NO_ERRORS_SCHEMA,
-	Output,
-} from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -12,13 +6,13 @@ import { CardComponent } from './card.component';
 
 jest.mock('@nativescript/core', () => ({}));
 
-@Component({
-	selector: 'Label',
-})
-class MockLabel {
-	@Input() text = '???';
-	@Output() tap = new EventEmitter<void>();
-}
+type TextElement = {
+	text: string;
+};
+
+type HtmlElement = {
+	html: string;
+};
 
 describe('CardComponent', () => {
 	let component: CardComponent;
@@ -26,7 +20,7 @@ describe('CardComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CardComponent, MockLabel],
+			declarations: [CardComponent],
 			schemas: [NO_ERRORS_SCHEMA],
 		}).compileComponents();
 
@@ -35,22 +29,46 @@ describe('CardComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('shows a work title', () => {
+	it('shows title', () => {
 		component.title = 'Some Work';
 		fixture.detectChanges();
-		const e: MockLabel = fixture.debugElement.query(
+		const e: TextElement = fixture.debugElement.query(
 			By.css('.card-title')
-		).componentInstance;
+		).nativeElement;
 		expect(e.text).toEqual('Some Work');
 	});
 
-	it('shows a work author', () => {
+	it('shows author', () => {
 		component.author = 'Some Author';
 		fixture.detectChanges();
-		const e: MockLabel = fixture.debugElement.query(
+		const e: TextElement = fixture.debugElement.query(
 			By.css('.card-author')
-		).componentInstance;
+		).nativeElement;
 		expect(e.text).toEqual('Some Author');
+	});
+
+	it('shows tags', () => {
+		component.tags = [
+			'No Archive Warnings Apply',
+			'Wednesday Addams is Soft for Enid Sinclair',
+		];
+		fixture.detectChanges();
+		const e: TextElement = fixture.debugElement.query(
+			By.css('.card-tags')
+		).nativeElement;
+
+		expect(e.text).toEqual(
+			'No Archive Warnings Apply, Wednesday Addams is Soft for Enid Sinclair'
+		);
+	});
+
+	it('shows summary', () => {
+		component.summary = '<p>Some html text</p>';
+		fixture.detectChanges();
+		const e: HtmlElement = fixture.debugElement.query(
+			By.css('.card-summary')
+		).nativeElement;
+		expect(e.html).toEqual('<p>Some html text</p>');
 	});
 
 	it('emits a tap event when tapped', () => {

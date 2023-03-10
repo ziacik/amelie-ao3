@@ -2,24 +2,24 @@
 	<StackLayout row="0" class="card-header">
 		<Label [text]="title" class="card-title"></Label>
 		<Label [text]="author" class="card-author"></Label>
-		<Label text="Zoznam tagov" class="card-tags"></Label>
+		<Label [text]="tags.join(', ')" class="card-tags"></Label>
 	</StackLayout>
 	<StackLayout row="1" class="card-body">
 		<ScrollView>
-			<Label text="Kolapsovateľný popis" class="card-description"></Label>
+			<HtmlView [html]="summary" class="card-summary"></HtmlView>
 		</ScrollView>
 	</StackLayout>
-	<StackLayout row="2" class="card-footer">
+	<StackLayout row="2" class="card-footer" orientation="horizontal">
 		<StackLayout orientation="horizontal" class="card-info">
-			<Label text="Počet kapitol" class="card-info-label"></Label>
+			<Label text="Chapters" class="card-info-label"></Label>
 			<Image src="res://icon_chapters.png" class="card-info-icon"></Image>
 		</StackLayout>
 		<StackLayout orientation="horizontal" class="card-info">
-			<Label text="Počet slov" class="card-info-label"></Label>
+			<Label text="Words" class="card-info-label"></Label>
 			<Image src="res://icon_words.png" class="card-info-icon"></Image>
 		</StackLayout>
 		<StackLayout orientation="horizontal" class="card-info">
-			<Label text="Počet kudos" class="card-info-label"></Label>
+			<Label text="Kudos" class="card-info-label"></Label>
 			<Image src="res://icon_kudos.png" class="card-info-icon"></Image>
 		</StackLayout>
 	</StackLayout>
