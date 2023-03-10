@@ -28,7 +28,7 @@ export class CardComponent {
 	chaptersOut = 0;
 
 	@Input()
-	chaptersTotal: number | undefined;
+	chaptersTotal: number | null = null;
 
 	@Input()
 	kudos = 0;

@@ -39,6 +39,10 @@ describe('SearchService', () => {
 					'Enid Sinclair',
 				],
 				href: 'https://archiveofourown.org/works/43765777',
+				chaptersOut: 3,
+				chaptersTotal: 17,
+				kudos: 18,
+				words: 86,
 			}),
 			new Work({
 				id: 45108169,
@@ -66,6 +70,10 @@ describe('SearchService', () => {
 					'Addams Family Curse',
 				],
 				href: 'https://archiveofourown.org/works/45108169',
+				chaptersOut: 7,
+				chaptersTotal: null,
+				kudos: 64,
+				words: 1101,
 			}),
 		];
 

@@ -5,6 +5,10 @@ export class Work {
 	readonly summary: string;
 	readonly tags: string[];
 	readonly href: string;
+	readonly chaptersOut: number;
+	readonly chaptersTotal: number | null;
+	readonly kudos: number;
+	readonly words: number;
 
 	constructor({
 		id,
@@ -13,6 +17,10 @@ export class Work {
 		summary,
 		tags,
 		href,
+		chaptersOut,
+		chaptersTotal,
+		kudos,
+		words,
 	}: {
 		id: number;
 		title: string;
@@ -20,6 +28,10 @@ export class Work {
 		summary: string;
 		tags: string[];
 		href: string;
+		chaptersOut: number;
+		chaptersTotal: number | null;
+		kudos: number;
+		words: number;
 	}) {
 		this.id = id;
 		this.title = title;
@@ -27,6 +39,10 @@ export class Work {
 		this.summary = summary;
 		this.tags = tags;
 		this.href = href;
+		this.chaptersOut = chaptersOut;
+		this.chaptersTotal = chaptersTotal;
+		this.kudos = kudos;
+		this.words = words;
 	}
 }
 
@@ -39,5 +55,9 @@ export function testWork(data: Partial<Work>): Work {
 		summary: data.summary ?? `Summary ${id}`,
 		tags: data.tags ?? [`Tag One`, `Tag Two`],
 		href: data.href ?? `href/${id}`,
+		chaptersOut: data.chaptersOut ?? 3,
+		chaptersTotal: data.chaptersTotal ?? null,
+		kudos: data.kudos ?? 4800,
+		words: data.words ?? 16257,
 	};
 }

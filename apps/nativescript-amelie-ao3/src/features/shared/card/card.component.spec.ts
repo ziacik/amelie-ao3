@@ -71,6 +71,44 @@ describe('CardComponent', () => {
 		expect(e.html).toEqual('<p>Some html text</p>');
 	});
 
+	it('shows chapters out and chapters total', () => {
+		component.chaptersOut = 10;
+		component.chaptersTotal = 18;
+		fixture.detectChanges();
+		const e: TextElement = fixture.debugElement.query(
+			By.css('.card-chapters')
+		).nativeElement;
+		expect(e.text).toEqual('10 / 18');
+	});
+
+	it('can show unknown chapters total', () => {
+		component.chaptersOut = 5;
+		component.chaptersTotal = null;
+		fixture.detectChanges();
+		const e: TextElement = fixture.debugElement.query(
+			By.css('.card-chapters')
+		).nativeElement;
+		expect(e.text).toEqual('5 / ?');
+	});
+
+	it('shows kudos count', () => {
+		component.kudos = 5792;
+		fixture.detectChanges();
+		const e: TextElement = fixture.debugElement.query(
+			By.css('.card-kudos')
+		).nativeElement;
+		expect(e.text).toEqual(5792);
+	});
+
+	it('shows word count', () => {
+		component.words = 666712;
+		fixture.detectChanges();
+		const e: TextElement = fixture.debugElement.query(
+			By.css('.card-words')
+		).nativeElement;
+		expect(e.text).toEqual(666712);
+	});
+
 	it('emits a tap event when tapped', () => {
 		let tapped = false;
 		component.tap.subscribe(() => (tapped = true));

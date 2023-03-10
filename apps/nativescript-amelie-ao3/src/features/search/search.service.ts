@@ -68,7 +68,23 @@ function toWork(html: string) {
 		const href =
 			'https://archiveofourown.org' +
 			$element.find('h4.heading a').attr('href');
-		const work = new Work({ id, title, author, summary, tags, href });
+		const [chaptersOut, chaptersTotal] = parseProgress(
+			$element.find('dd.chapters').text()
+		);
+		const kudos = parseNumber($element.find('dd.kudos').text());
+		const words = parseNumber($element.find('dd.words').text());
+		const work = new Work({
+			id,
+			title,
+			author,
+			summary,
+			tags,
+			href,
+			chaptersOut,
+			chaptersTotal,
+			kudos,
+			words,
+		});
 		works.push(work);
 	});
 	return works;
@@ -80,4 +96,13 @@ function req<T>(value: T | undefined, name: string): T {
 	} else {
 		return value;
 	}
+}
+
+function parseNumber(value: string): number {
+	return +value.replace(/[^0-9]+/g, '');
+}
+
+function parseProgress(value: string): [number, number | null] {
+	const [out, total] = value.split('/');
+	return [parseNumber(out), total === '?' ? null : parseNumber(total)];
 }
