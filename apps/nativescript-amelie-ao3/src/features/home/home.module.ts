@@ -9,6 +9,8 @@ import { NativeScriptRouterModule } from '@nativescript/angular';
 import { SharedModule } from '../shared/shared.module';
 import { HOME_COMPONENTS, HomeComponent } from './components';
 
+import { NativeScriptMaterialTextViewModule } from '@nativescript-community/ui-material-textview/angular';
+
 export const routes: Routes = [
 	{
 		path: '',
@@ -17,7 +19,11 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [SharedModule, NativeScriptRouterModule.forChild(routes)],
+	imports: [
+		SharedModule,
+		NativeScriptRouterModule.forChild(routes),
+		NativeScriptMaterialTextViewModule,
+	],
 	declarations: [...HOME_COMPONENTS],
 	exports: [...HOME_COMPONENTS],
 	schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
